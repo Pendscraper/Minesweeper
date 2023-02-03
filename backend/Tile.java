@@ -4,10 +4,12 @@ public class Tile {
     public boolean mine;
     int adjacent;
     boolean discovered;
+    public boolean flagged;
 
     public Tile() {
-        this.mine = false;
+        mine = false;
         discovered = false;
+        flagged = false;
     }
 
     public boolean discovered() {

@@ -45,6 +45,25 @@ public class Board {
         return count;
     }
 
+    public void uncoverAdjacentZeroes() {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (state[x][y].discovered && state[x][y].adjacent == 0) {
+                    int negX = x == 0 ? 0 : -1;
+                    int posX = x == width - 1 ? 0 : 1;
+                    int negY = y == 0 ? 0 : -1;
+                    int posY = y == height - 1 ? 0 : 1;
+
+                    for (int a = negX; a <= posX; a++) {
+                        for (int b = negY; b <= posY; b++) {
+                            state[x + a][y + b].discover();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private void setMines(int mineCount) {
         assert(mineCount <= width * height - 1);
 
@@ -58,16 +77,16 @@ public class Board {
                 else
                     break;
             }
-            state[curPos / width][curPos % width].mine = true;
+            state[curPos / height][curPos % height].mine = true;
             minePos.add(curPos);
         }
     }
 
     public Board (int width, int height) {
-        this(width, height, (width * height) / 4);
+        this(width, height, (width * height) / 5);
     }
     public Board () {
-        this(10, 10);
+        this(20, 10);
     }
 
     public boolean move(int x, int y) {
